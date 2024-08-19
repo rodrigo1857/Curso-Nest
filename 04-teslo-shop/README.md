@@ -8,8 +8,8 @@
 3. Clonar el archivo .env.template y renombrarlo
 4. cambiar las variables de entorno 
 5. levantar la base de datos 
-
+6. Ejecutar seed
 ```
  docker-compose up -d 
 ```
-6. levantar proyecto
+6. levantar proyecto ```yarn start:dev || npm run start:dev```
