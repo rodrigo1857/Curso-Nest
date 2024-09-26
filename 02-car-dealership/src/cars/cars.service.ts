@@ -50,6 +50,7 @@ public getCarById(id: string){
 public CreateCar(createCarDto: CreateCarDto){
    
   const car: Car = {
+      //operador spread 
       id: uuid(),
       ... createCarDto
   }
@@ -65,6 +66,7 @@ public CreateCar(createCarDto: CreateCarDto){
     this.cars = this.cars.map((car) => {
       if(car.id === id){
         cardb = {...cardb, ...updateCarDto,id};
+        console.log(cardb);
         return cardb;
       }
 
