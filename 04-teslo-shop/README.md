@@ -2,14 +2,22 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-# Teslo API
+# Ejecutar en desarrollo 
 1. Clonar proyecto 
-2. ``` yarn install ```
-3. Clonar el archivo .env.template y renombrarlo
-4. cambiar las variables de entorno 
-5. levantar la base de datos 
-6. Ejecutar seed
+2. ejecutar el comando 
+``` yarn install ```
+3. Tener Nest CLI instalado  
+``` npm i -g @nestjs/cli```
+4. Clonar el archivo .env.template y renombrarlo
+5. cambiar las variables de entorno 
+6. levantar la base de datos 
+7. Ejecutar seed
 ```
  docker-compose up -d 
 ```
-6. levantar proyecto ```yarn start:dev || npm run start:dev```
+8. levantar proyecto ```yarn start:dev || npm run start:dev```
+
+## Stack utilizado 
+* MongoDB 
+* NEst 
+* Angular 
