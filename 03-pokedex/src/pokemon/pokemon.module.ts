@@ -18,6 +18,8 @@ import { Pokemon, PokemonSchema } from './entities/pokemon.entity';
     )
 
   ],
-  exports: [PokemonService],
+  // Uno es exportar el servicio para que pueda ser inyectado en otros modulos y
+  // el otro es exportar el modulo de mongoose para que pueda ser inyectado en otros modulos
+  exports: [PokemonService, MongooseModule],
 })
 export class PokemonModule {}
