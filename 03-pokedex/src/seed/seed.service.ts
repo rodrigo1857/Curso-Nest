@@ -35,8 +35,8 @@ export class SeedService {
         const segmentos = url.split('/');
         const no = +segmentos[segmentos.length - 2];
         //const pokemon = await this.pokemonModel.create({ no, name });
-
-        inserPromise.push({ no, name });
+        name = name.toUpperCase();
+        inserPromise.push({ no, name});
       });
        const datos =  await  this.pokemonModel.insertMany(inserPromise);
 
