@@ -7,6 +7,10 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class PokemonService {
+
+  createPokemon(results: import("../seed/interfaces/poke-response.interface").Result[]) {
+    throw new Error('Method not implemented.');
+  }
   
   constructor(
     @InjectModel(Pokemon.name)
