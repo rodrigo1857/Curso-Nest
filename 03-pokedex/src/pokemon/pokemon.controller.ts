@@ -20,7 +20,6 @@ export class PokemonController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    Logger.log("=== BUSCANDO POKEMON ===");
     return this.pokemonService.findOne(id);
   }
 

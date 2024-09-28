@@ -43,7 +43,6 @@ try {
           if (isValidObjectId(id)){
             pokemon = await this.pokemonModel.findById(id);
           } 
-          console.log(pokemon);
           // validacion por name 
           if(!pokemon){
             pokemon = await this.pokemonModel.findOne({name: id.toUpperCase().trim()});
