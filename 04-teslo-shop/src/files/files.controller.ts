@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, BadRequestException } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { fileFilter } from './helpers/fileFilter.helper';
+import { fileFilter ,fileNamer} from './helpers/index';
 import { diskStorage } from 'multer';
-import { fileNamer } from './helpers/fileNamer.helper';
+
 
 @Controller('files')
 export class FilesController {
@@ -12,6 +12,7 @@ export class FilesController {
   @Post('product')
   @UseInterceptors(FileInterceptor('file',{
     fileFilter: fileFilter,
+    //limits:{fileSize: 1024*1024*5},
     storage:diskStorage({
       destination:'./static/products',
       filename: fileNamer
