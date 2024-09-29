@@ -15,8 +15,8 @@ export class ProductsController {
 
   @Get()
   findAll(@Query() paginationDTO: PaginationDTO) {
-    console.log(paginationDTO)
-    return this.productsService.findAll(paginationDTO);
+    console.log(paginationDTO);// Debe retornar el objeto con los valores de limit y offset
+     return this.productsService.findAll(paginationDTO);
   }
 
   @Get(':term')
@@ -26,6 +26,7 @@ export class ProductsController {
 
   @Patch(':id')
   update(@Param('id', ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto) {
+    console.log(updateProductDto);
     return this.productsService.update(id, updateProductDto);
   }
 

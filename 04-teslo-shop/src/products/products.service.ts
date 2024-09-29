@@ -37,6 +37,7 @@ export class ProductsService {
       await this.productRepository.save(product);
       return { ...product, images: images };
     } catch (error) {
+      this.logger.error(error);
       this.handleExceptions(error);
     }
   }
@@ -54,7 +55,7 @@ export class ProductsService {
     return products.map(({ images, ...rest }) => ({
       ...rest,
       images: images.map(img => img.url)
-    }))
+    })) 
   }
 
   async findOne(term: string): Promise<Product> {
@@ -104,7 +105,8 @@ export class ProductsService {
 
       if (images) {
         await queryRunner.manager.delete(ProductImage, { product: { id } })
-        product.images = images.map(image => this.productImageRepository.create({ url: image }))
+        product.images = images.map(
+          image => this.productImageRepository.create({ url: image }))
       }
 
       await queryRunner.manager.save(product);
@@ -114,6 +116,7 @@ export class ProductsService {
       return this.finOnePlain(id);
     } catch (error) {
       await queryRunner.rollbackTransaction();
+      await queryRunner.release();
       this.handleExceptions(error);
     }
 
