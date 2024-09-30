@@ -1,13 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFile, UseInterceptors, BadRequestException, Logger, Res } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileFilter ,fileNamer} from './helpers/index';
 import { diskStorage } from 'multer';
+import { Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 
 @Controller('files')
 export class FilesController {
-  constructor(private readonly filesService: FilesService) {}
+  constructor(
+    private readonly filesService: FilesService,
+    private readonly configService: ConfigService
+  ) {}
+
+  @Get('product/:imageName')
+  findProductImage(
+    @Res() res: Response,
+    @Param('imageName') imageName: string){
+    Logger.log('===== OBTENER ARCHIVO === ');
+    const path = this.filesService.getStaticProductImage(imageName);
+    //  res.status(403).json({
+    //   ok:false,
+    //   path:path
+    //  })
+    //  return path
+
+    res.sendFile(path);
+  }
+
 
   @Post('product')
   @UseInterceptors(FileInterceptor('file',{
@@ -19,14 +40,20 @@ export class FilesController {
     })
   }))
   uploadProducImage(@UploadedFile()file: Express.Multer.File){
-    
+    Logger.log('===== CARGANDO EL ARCHIVO=== ');
     if(!file){
       throw new BadRequestException('Make sure that file is an image');
     }
 
     console.log(file);
+
+    const secureUrl = `${this.configService.get('HOST_API')}/files/product/${file.filename}`;
     return {
-      fileName: file.originalname
+      secureUrl,
     };
   }
+
+
+
+
 }

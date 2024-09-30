@@ -13,7 +13,7 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     })
     );
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 
   const logger = new Logger('API TESLO-SHOP');
   Logger.log('====== API TESLO SHOP CORRIENDO =======');
