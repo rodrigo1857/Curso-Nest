@@ -11,11 +11,12 @@
 4. Clonar el archivo .env.template y renombrarlo
 5. cambiar las variables de entorno 
 6. levantar la base de datos 
-7. Ejecutar seed
+7. levantar proyecto ```yarn start:dev || npm run start:dev```
+8. Ejecutar seed
 ```
  docker-compose up -d 
 ```
-8. levantar proyecto ```yarn start:dev || npm run start:dev```
+
 
 ## Stack utilizado 
 * MongoDB 
