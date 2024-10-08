@@ -34,7 +34,7 @@ export class AuthService {
       delete user.password;
       return {
         ...user,
-        token: this.getJwtToken({email:user.email})
+        token: this.getJwtToken({id:user.id})
       };
     } catch (error) {
       this.HandleError(error)
@@ -48,11 +48,8 @@ export class AuthService {
       const {email,password} = loginUserDto;
       const user = await this.userRepository.findOne({
         where:{email},
-        select:{email:true,password:true}
+        select:{email:true,password:true, id:true}
       });
-      console.log(email);
-      console.log(password);
-      console.log(user);
 
       if(!user){
         throw new UnauthorizedException('Usuario no encontrado ')
@@ -63,12 +60,12 @@ export class AuthService {
       
       return {
         ...user,
-        token: this.getJwtToken({email:user.email})
+        token: this.getJwtToken({id:user.id})
       };
    
   }
 
-  private getJwtToken(payload:JwtPayload){
+  private getJwtToken(payload:JwtPayload){  
     const token = this.jwtService.sign(payload);
     return token;
 
