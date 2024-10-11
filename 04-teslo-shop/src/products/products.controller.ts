@@ -3,6 +3,9 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDTO } from 'src/common/dtos/pagination.dto';
+import { Auth, GetUser } from 'src/auth/decorators';
+import { ValidRoles } from 'src/auth/interface';
+import { User } from 'src/auth/entities/user.entity';
 
 
 @Controller('products')
@@ -12,8 +15,10 @@ export class ProductsController {
   ) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  @Auth()
+  create(@Body() createProductDto: CreateProductDto,
+    @GetUser() user:User) { 
+    return this.productsService.create(createProductDto,user);
   }
 
   @Get()
@@ -28,13 +33,16 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto) {
+  @Auth(ValidRoles.admin)
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto,@GetUser() user:User) {
     console.log(updateProductDto);
-    return this.productsService.update(id, updateProductDto);
+    return this.productsService.update(id, updateProductDto,user);
   }
 
   @Delete(':id')
+  @Auth(ValidRoles.admin)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.remove(id);
   }
+  
 }
