@@ -10,9 +10,11 @@ import { IncomingHttpHeaders } from 'http';
 
 import { ValidRoles } from './interface';
 import { UserRoleGuard } from './guards/user-role.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
