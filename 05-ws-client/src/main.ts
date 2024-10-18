@@ -5,8 +5,10 @@ import './style.css'
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <h1>Websocket- Client</h1>
-    <span>offline</span>
-  </div>
+    <span id = "server-status ">offline</spanid>
+    
+    <ul id = "clients-ul"></ul>
+    </div>
 `
 connectToServer();
 //setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
