@@ -1,4 +1,4 @@
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { MessagesWsService } from './messages-ws.service';
 import { Server, Socket } from 'socket.io';
 
@@ -22,6 +22,14 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
     this.messagesWsService.removeCLiente(client.id)
     this.wss.emit('clients-updated', this.messagesWsService.getConnectedClients())
 
+  }
+
+  @SubscribeMessage('message-from-client')
+  onMessageClient(client: Socket, payload: any) {
+    client.broadcast.emit('message-from-server', {
+      fullName: 'TESLO SHOP',
+      message: payload.message||'no-message!!!!'
+    })
   }
 
 }

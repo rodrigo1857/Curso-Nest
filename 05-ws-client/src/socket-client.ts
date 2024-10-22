@@ -1,4 +1,5 @@
 import { Manager, Socket } from "socket.io-client"
+let socket: Socket;
 
 export const connectToServer = () => {
     const manager = new Manager('http://localhost:3000/socket.io/socket.io.js');
@@ -11,8 +12,13 @@ export const connectToServer = () => {
 const addListeners = (socket:Socket) => {
     const serverStatusLabel = document.querySelector('#server-status')!;
     const clientsUl = document.querySelector('#clients-ul')!;
+
+    const  messageForm = document.querySelector<HTMLFormElement>('#message-form')!;
+    const messageInput = document.querySelector<HTMLInputElement>('#message-input')!;
+    const messageUl = document.querySelector('#message-ul')!;
+
     socket.on('connect', () => {
-       console.log('Conectado al servidor') 
+        serverStatusLabel.innerHTML = 'connected'
     })
 
     socket.on('disconnect', () => {
@@ -27,6 +33,22 @@ const addListeners = (socket:Socket) => {
         })
 
         clientsUl.innerHTML = clientsHtml;
+    })
+
+    messageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if( messageInput.value.trim().length <= 0 ) return;
+
+        socket.emit('message-from-client', { 
+            id: 'YO!!', 
+            message: messageInput.value 
+        });
+
+        messageInput.value = '';
+    });
+
+    socket.on('message-from-server', (payload: {fullName:string, message: string }) => {
+        console.log(payload)
     })
 }
 
