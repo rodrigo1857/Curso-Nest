@@ -28,12 +28,14 @@ export class ProductsController {
   }
 
   @Get()
+  @ApiResponse({ status: 201, description: 'All products', type: Product  })
   findAll(@Query() paginationDTO: PaginationDTO) {
     console.log(paginationDTO);// Debe retornar el objeto con los valores de limit y offset
      return this.productsService.findAll(paginationDTO);
   }
 
   @Get(':term')
+  @ApiResponse({ status: 201, description: 'Product for id', type: Product  })
   async findOne(@Param('term') term: string) {
     return this.productsService.finOnePlain(term);
   }
