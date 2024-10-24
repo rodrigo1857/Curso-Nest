@@ -1,6 +1,7 @@
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { MessagesWsService } from './messages-ws.service';
 import { Server, Socket } from 'socket.io';
+import { NewMessageDto } from './dtos/new-message.dto';
 
 @WebSocketGateway({cors:true})
 export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -25,9 +26,9 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
   }
 
   @SubscribeMessage('message-from-client')
-  onMessageClient(client: Socket, payload: any) {
+  onMessageClient(client: Socket, payload: NewMessageDto) {
     client.broadcast.emit('message-from-server', {
-      fullName: 'TESLO SHOP',
+      fullName: 'Soy yo!!!!',
       message: payload.message||'no-message!!!!'
     })
   }
