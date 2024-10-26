@@ -1,14 +1,23 @@
 import { Manager, Socket } from "socket.io-client"
 
-export const connectToServer = () => {
-    const manager = new Manager('http://localhost:3000/socket.io/socket.io.js');
-    const socket = manager.socket('/')
+let socket:Socket;
+export const connectToServer = (token: string) => {
+    const manager = new Manager('http://localhost:3000/socket.io/socket.io.js',{
+        extraHeaders: {
+            hola : 'mundo',
+            authentication : token
+        }
+    });
+
+    socket?.removeAllListeners();
+    
+    socket = manager.socket('/')
     console.log({socket});
-    addListeners(socket);
+    addListeners();
 
 }
 
-const addListeners = (socket:Socket) => {
+const addListeners = () => {
     const serverStatusLabel = document.querySelector('#server-status')!;
     const clientsUl = document.querySelector('#clients-ul')!;
 
@@ -22,6 +31,7 @@ const addListeners = (socket:Socket) => {
 
     socket.on('disconnect', () => {
         console.log('Desconectado del servidor') 
+        serverStatusLabel.innerHTML = 'disconnected'
      })
 
      socket.on('clients-updated', (clients:string[]) => {
